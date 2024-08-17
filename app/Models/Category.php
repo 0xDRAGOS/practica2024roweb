@@ -3,12 +3,13 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Concerns\HasTimestamps;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Category extends Model
 {
-    use HasTimestamps;
+    use HasTimestamps, HasFactory;
 
     public function products(): HasMany
     {

@@ -10,7 +10,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class Product extends Model
 {
-    use HasFactory;
+    use HasFactory, HasTimestamps;
 
     public function images(): HasMany
     {
