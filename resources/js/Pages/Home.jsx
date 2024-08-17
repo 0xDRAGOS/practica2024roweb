@@ -1,5 +1,4 @@
 import {Link, Head} from '@inertiajs/react';
-import GuestLayout from '@/Layouts/GuestLayout';
 import ApplicationLogo from "@/Components/ApplicationLogo.jsx";
 import NavLink from "@/Components/NavLink.jsx";
 
@@ -26,7 +25,7 @@ export default function Home({auth, laravelVersion, phpVersion}) {
                                     <NavLink href={route('dashboard')} active={route().current('dashboard')}>
                                         Log in
                                     </NavLink>
-                                    <NavLink href={route('dashboard')} active={route().current('dashboard')}>
+                                    <NavLink href={route('register')} active={route().current('dashboard')}>
                                         Register
                                     </NavLink>
                                 </>
@@ -38,7 +37,7 @@ export default function Home({auth, laravelVersion, phpVersion}) {
                     <div className="text-yellow-600 text-xl font-bold max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">Home</div>
                 </div>
 
-                <main className="">
+                <main className="flex-1">
                     TODO
                 </main>
 

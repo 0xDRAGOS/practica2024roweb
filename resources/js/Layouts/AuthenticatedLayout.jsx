@@ -9,7 +9,7 @@ export default function Authenticated({ user, header, children, laravelVersion, 
     const [showingNavigationDropdown, setShowingNavigationDropdown] = useState(false);
 
     return (
-        <div className="min-h-screen bg-gray-100">
+        <div className="min-h-screen flex flex-col bg-yellow-900">
             <nav className="bg-red-950 border-b border-yellow-600">
                 <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                     <div className="flex justify-between h-16">
@@ -25,6 +25,12 @@ export default function Authenticated({ user, header, children, laravelVersion, 
                                     Dashboard
                                 </NavLink>
                             </div>
+
+                            <div className="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
+                                <NavLink href={route('categories.list')} active={route().current('dashboard')}>
+                                    Categories
+                                </NavLink>
+                            </div>
                         </div>
 
                         <div className="hidden sm:flex sm:items-center sm:ms-6">
@@ -36,7 +42,7 @@ export default function Authenticated({ user, header, children, laravelVersion, 
                                                 type="button"
                                                 className="inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md text-red-950 bg-yellow-600 hover:bg-yellow-400 focus:outline-none transition ease-in-out duration-150"
                                             >
-                                                {user.name}
+                                                {/*{user.name}*/}
 
                                                 <svg
                                                     className="ms-2 -me-0.5 h-4 w-4"
@@ -99,8 +105,8 @@ export default function Authenticated({ user, header, children, laravelVersion, 
 
                     <div className="pt-4 pb-1 border-t border-gray-200">
                         <div className="px-4">
-                            <div className="font-medium text-base text-yellow-600">{user.name}</div>
-                            <div className="font-medium text-sm text-yellow-600">{user.email}</div>
+                            {/*<div className="font-medium text-base text-yellow-600">{user.name}</div>*/}
+                            {/*/!*<div className="font-medium text-sm text-yellow-600">{user.email}</div>*!/*/}
                         </div>
 
                         <div className="mt-3 space-y-1">
@@ -119,10 +125,10 @@ export default function Authenticated({ user, header, children, laravelVersion, 
                 </header>
             )}
 
-            <main>{children}</main>
+            <main className="flex-1">{children}</main>
 
             <footer className="bg-red-950 py-16 text-center text-sm text-yellow-600">
-                Laravel v{laravelVersion} (PHP v{phpVersion})
+                Practica
             </footer>
         </div>
     );
