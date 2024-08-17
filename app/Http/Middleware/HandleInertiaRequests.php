@@ -39,6 +39,10 @@ class HandleInertiaRequests extends Middleware
                     })->map(function ($permission) {
                         return [$permission['title'] => auth()->user()->can($permission['title'])];
                     })->collapse()->all(),
+                'flash' => [
+                    'success' => session('success'),
+                    'error' => session('error'),
+                ]
             ],
         ];
     }
