@@ -7,6 +7,7 @@ use App\Http\Resources\CategoryResource;
 use App\Http\Resources\ProductResource;
 use App\Models\Category;
 use App\Models\Product;
+use Illuminate\Support\Facades\Storage;
 use Inertia\Inertia;
 
 class ProductController extends Controller
@@ -22,7 +23,8 @@ class ProductController extends Controller
 
     public function show(Product $product) {
         return Inertia::render('Products/Show', [
-            'product' => $product
+            'product' => new ProductResource($product),
+            'images' => $product->images()->get()
         ]);
     }
 
@@ -41,12 +43,17 @@ class ProductController extends Controller
     public function update(Product $product) {
         return Inertia::render('Products/AddEdit', [
             'product' => $product,
-            'categories' => CategoryResource::collection(Category::orderBy('name')->get()),
+            'categories' => CategoryResource::collection(Category::orderBy('name')->get())
         ]);
     }
 
     public function delete(Product $product) {
-        $product->delete($product);
+        foreach ($product->images as $image) {
+            Storage::disk('public')->delete($image->path);
+        }
+
+        $product->images()->delete();
+        $product->delete();
 
         return redirect()->route('products.list')->with('success', 'Product deleted successfully!');
     }

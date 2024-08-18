@@ -5,7 +5,7 @@ import NavLink from '@/Components/NavLink';
 import ResponsiveNavLink from '@/Components/ResponsiveNavLink';
 import { Link } from '@inertiajs/react';
 
-export default function Authenticated({ user, header, children, laravelVersion, phpVersion }) {
+export default function Authenticated({ user, header, children }) {
     const [showingNavigationDropdown, setShowingNavigationDropdown] = useState(false);
 
     return (
@@ -48,7 +48,7 @@ export default function Authenticated({ user, header, children, laravelVersion, 
                                                 type="button"
                                                 className="inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md text-red-950 bg-yellow-600 hover:bg-yellow-400 focus:outline-none transition ease-in-out duration-150"
                                             >
-                                                {/*{user.name}*/}
+                                                {user.name}
 
                                                 <svg
                                                     className="ms-2 -me-0.5 h-4 w-4"
@@ -111,8 +111,8 @@ export default function Authenticated({ user, header, children, laravelVersion, 
 
                     <div className="pt-4 pb-1 border-t border-gray-200">
                         <div className="px-4">
-                            {/*<div className="font-medium text-base text-yellow-600">{user.name}</div>*/}
-                            {/*/!*<div className="font-medium text-sm text-yellow-600">{user.email}</div>*!/*/}
+                            <div className="font-medium text-base text-yellow-600">{user.name}</div>
+                            {<div className="font-medium text-sm text-yellow-600">{user.email}</div>}
                         </div>
 
                         <div className="mt-3 space-y-1">
@@ -134,7 +134,7 @@ export default function Authenticated({ user, header, children, laravelVersion, 
             <main className="flex-1">{children}</main>
 
             <footer className="bg-red-950 py-16 text-center text-sm text-yellow-600">
-                Practica
+                <p>&copy; {new Date().getFullYear()} Practica Roweb. All rights reserved.</p>
             </footer>
         </div>
     );

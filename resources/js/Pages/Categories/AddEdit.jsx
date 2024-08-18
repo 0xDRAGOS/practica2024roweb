@@ -19,7 +19,9 @@ export default function AddEdit({category, auth}) {
     };
 
     return (
-        <AuthenticatedLayout user={auth.user}>
+        <AuthenticatedLayout
+            user={auth.user}
+        >
             <Head title={category ? 'Edit category' : 'Add category'}/>
             <div>
                 <div className="py-4 px-4">

@@ -23,11 +23,19 @@ class ProductRequest extends FormRequest
             $product = new Product();
         }
 
-        $product->category_id = $this->get('category_id');
-        $product->name = $this->get('name');
-        $product->price = $this->get('price');
-        $product->description = $this->get('description');
+        $product->fill($this->validated());
+
         $product->save();
+
+        if ($this->hasFile('images')) {
+            foreach ($this->file('images') as $image) {
+                $path = $image->store('products', 'public');
+                $product->images()->create([
+                    'path' => $path,
+                    'product_id' => $product->id
+                ]);
+            }
+        }
 
         return $product;
     }

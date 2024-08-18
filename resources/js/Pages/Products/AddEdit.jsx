@@ -12,26 +12,52 @@ export default function AddEdit({ product, categories, auth }) {
         name: product?.name || '',
         category_id: product?.category_id || '',
         price: product?.price || '',
-        description: product?.description || ''
+        description: product?.description || '',
+        images: []
     });
 
     const submit = (e) => {
         e.preventDefault();
-        console.log(data);
+
+        const formData = new FormData();
+
+        formData.append('name', data.name);
+        formData.append('category_id', data.category_id);
+        formData.append('price', data.price);
+        formData.append('description', data.description);
+
+        data.images.forEach((file, index) => {
+            formData.append(`images[${index}]`, file);
+        });
+
         let productRoute = product ? route('products.store', [product.id]) : route('products.store');
-        console.log(productRoute);
         post(productRoute);
+
+        console.log(data);
     };
 
     return (
-        <AuthenticatedLayout user={auth.user}>
+        <AuthenticatedLayout
+            user={auth.user}
+            header={<h2 className="font-semibold text-xl text-yellow-600 leading-tight">{product ? 'Edit product' : 'Add product'}</h2>}
+        >
             <Head title={product ? 'Edit product' : 'Add product'}/>
             <div>
                 <div className="py-4 px-4">
-                    <div className={'text-yellow-600 text-xl font-bold'}>{product ? 'Edit product' : 'Add product'}</div>
-
                     <div className="mt-6">
                         <form onSubmit={submit} className="mt-6 space-y-6">
+                            <div>
+                                <InputLabel htmlFor="product_image_path" value="Image"/>
+                                <TextInput
+                                    id="image_path"
+                                    type="file" name="image"
+                                    className="mt-1 block w-full"
+                                    onChange={e => setData('images', Array.from(e.target.files))}
+                                    multiple
+                                />
+                                <InputError message={errors.image} className="mt-2"/>
+                            </div>
+
                             <div>
                                 <InputLabel htmlFor="name" value="Name"/>
 

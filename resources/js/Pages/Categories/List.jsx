@@ -2,9 +2,11 @@ import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout';
 import {Head, Link} from '@inertiajs/react';
 import {Fragment} from "react";
 
-export default function List({categories}) {
+export default function List({categories, auth}) {
     return (
-        <AuthenticatedLayout>
+        <AuthenticatedLayout
+            user={auth.user}
+        >
             <Head title="Category List" />
             <div>
                 <div className="py-4 px-4">
