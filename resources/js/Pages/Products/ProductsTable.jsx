@@ -1,11 +1,9 @@
 import Pagination from "@/Components/Pagination";
 import { Link, router } from "@inertiajs/react";
 
-export default function TasksTable({ products, success}) {
+export default function ProductsTable({ products, success }) {
     const deleteProduct = (product) => {
-        if (!window.confirm('Are you sure you want to delete this product?')) {
-            return;
-        } else {
+        if (window.confirm('Are you sure you want to delete this product?')) {
             router.delete(route('products.delete', product.id))
         }
     }
@@ -42,7 +40,7 @@ export default function TasksTable({ products, success}) {
                             <td className="px-3 py-2 text-nowrap">{product.price}</td>
                             <td className="px-3 py-2 flex justify-center">
                                 <Link href={route('products.update', product.id)} className="font-medium text-yellow-600 rounded-md bg-red-950 px-2 py-2 text-center hover:bg-red-900 mx-1">Update</Link>
-                                <button onClick={(e) => deleteProduct(product)} className="font-medium text-yellow-600 rounded-md bg-red-950 px-2 py-2 text-center hover:bg-red-900 mx-1">Delete</button>
+                                <button onClick={() => deleteProduct(product)} className="font-medium text-yellow-600 rounded-md bg-red-950 px-2 py-2 text-center hover:bg-red-900 mx-1">Delete</button>
                             </td>
                         </tr>
                     ))}

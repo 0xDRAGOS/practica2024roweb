@@ -1,5 +1,5 @@
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout";
-import { Head} from "@inertiajs/react";
+import { Head } from "@inertiajs/react";
 
 export default function Show({ auth, product, images }) {
     console.log(images);
