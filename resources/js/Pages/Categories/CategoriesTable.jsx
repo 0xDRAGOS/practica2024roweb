@@ -3,7 +3,7 @@ import { Link, router } from "@inertiajs/react";
 
 export default function CategoriesTable({ categories, success }) {
     const deleteCategory = (category) => {
-        if (!window.confirm('Are you sure you want to delete this category?')) {
+        if (window.confirm('Are you sure you want to delete this category?')) {
             router.delete(route('categories.delete', category.id))
         }
     }
