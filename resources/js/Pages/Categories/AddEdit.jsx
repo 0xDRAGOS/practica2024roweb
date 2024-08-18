@@ -21,12 +21,11 @@ export default function AddEdit({category, auth}) {
     return (
         <AuthenticatedLayout
             user={auth.user}
+            header={<h2 className="font-semibold text-xl text-yellow-600 leading-tight">{category ? 'Edit category' : 'Add category'}</h2>}
         >
             <Head title={category ? 'Edit category' : 'Add category'}/>
             <div>
                 <div className="py-4 px-4">
-                    <div className={'text-yellow-600 text-xl font-bold'}>{category ? 'Edit category' : 'Add category'}</div>
-
                     <div className="mt-6">
                         <form onSubmit={submit} className="mt-6 space-y-6">
                             <div>
