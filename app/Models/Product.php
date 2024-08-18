@@ -10,7 +10,14 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class Product extends Model
 {
-    use HasFactory;
+    use HasFactory, HasTimestamps;
+
+    protected $fillable = [
+        'name',
+        'category_id',
+        'price',
+        'description'
+    ];
 
     public function images(): HasMany
     {

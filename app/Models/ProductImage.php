@@ -9,6 +9,10 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 class ProductImage extends Model
 {
     use HasTimestamps;
+    protected $fillable = [
+        'path',
+        'product_id'
+    ];
 
     public function product(): BelongsTo
     {

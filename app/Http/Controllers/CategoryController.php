@@ -3,14 +3,18 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\CategoryRequest;
+use App\Http\Resources\CategoryResource;
 use App\Models\Category;
 use Inertia\Inertia;
 
 class CategoryController extends Controller
 {
     public function list() {
+        $categories = Category::query()->orderBy('name')->paginate(10)->onEachSide(1);
+
         return Inertia::render('Categories/List', [
-            'categories' => Category::orderBy('order')->get()
+            'categories' => CategoryResource::collection($categories),
+            'success' => session('success')
         ]);
     }
 
