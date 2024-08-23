@@ -4,7 +4,6 @@ import NavLink from "@/Components/NavLink.jsx";
 import Pagination from "@/Components/Pagination.jsx";
 
 export default function Home({ products, auth, canLogin, canRegister }) {
-    console.log(products);
     return (
         <>
             <Head title="Home"/>

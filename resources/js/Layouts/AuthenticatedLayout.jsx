@@ -7,7 +7,6 @@ import { Link } from '@inertiajs/react';
 
 export default function Authenticated({ user, header, children, flash }) {
     const [showingNavigationDropdown, setShowingNavigationDropdown] = useState(false);
-    console.log(flash);
     return (
         <div className="min-h-screen flex flex-col bg-yellow-900">
             <nav className="bg-red-950 border-b border-yellow-600">
@@ -27,13 +26,13 @@ export default function Authenticated({ user, header, children, flash }) {
                             </div>
 
                             <div className="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
-                                <NavLink href={route('categories.list')} active={route().current('dashboard')}>
+                                <NavLink href={route('categories.list')} active={route().current('categories.list')}>
                                     Categories
                                 </NavLink>
                             </div>
 
                             <div className="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
-                                <NavLink href={route('products.list')} active={route().current('dashboard')}>
+                                <NavLink href={route('products.list')} active={route().current('products.list')}>
                                     Products
                                 </NavLink>
                             </div>
