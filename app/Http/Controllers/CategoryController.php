@@ -14,7 +14,10 @@ class CategoryController extends Controller
 
         return Inertia::render('Categories/List', [
             'categories' => CategoryResource::collection($categories),
-            'success' => session('success')
+            'flash' => [
+                'success' => session('success'),
+                'error' => session('error')
+            ]
         ]);
     }
 
@@ -35,7 +38,11 @@ class CategoryController extends Controller
     }
 
     public function delete(Category $category) {
-        $category->delete($category);
+        if ($category->products()->count()) {
+            return redirect()->back()->with(['error' => 'Category contains products that are associated with it.']);
+        }
+
+        $category->delete();
 
         return redirect()->route('categories.list')->with('success', 'Category deleted successfully!');
     }

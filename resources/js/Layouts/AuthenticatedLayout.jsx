@@ -5,9 +5,9 @@ import NavLink from '@/Components/NavLink';
 import ResponsiveNavLink from '@/Components/ResponsiveNavLink';
 import { Link } from '@inertiajs/react';
 
-export default function Authenticated({ user, header, children }) {
+export default function Authenticated({ user, header, children, flash }) {
     const [showingNavigationDropdown, setShowingNavigationDropdown] = useState(false);
-
+    console.log(flash);
     return (
         <div className="min-h-screen flex flex-col bg-yellow-900">
             <nav className="bg-red-950 border-b border-yellow-600">
@@ -129,6 +129,18 @@ export default function Authenticated({ user, header, children }) {
                 <header className="bg-red-950 shadow">
                     <div className="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">{header}</div>
                 </header>
+            )}
+
+            {flash && flash.success && (
+                <div className="bg-emerald-500 py-2 px-4 text-white rounded mb-4">
+                    {flash.success}
+                </div>
+            )}
+
+            {flash && flash.error && (
+                <div className="bg-red-500 py-2 px-4 text-white rounded mb-4">
+                    {flash.error}
+                </div>
             )}
 
             <main className="flex-1">{children}</main>

@@ -6,15 +6,21 @@ import InputError from "@/Components/InputError.jsx";
 import PrimaryButton from "@/Components/PrimaryButton.jsx";
 import TextAreaInput from "@/Components/TextAreaInput.jsx";
 import SelectInput from "@/Components/SelectInput.jsx";
+import {useState} from "react";
 
-export default function AddEdit({ product, categories, auth }) {
+export default function AddEdit({ product, categories, images, auth }) {
     const {data, setData, post, errors, processing} = useForm({
         name: product?.name || '',
         category_id: product?.category_id || '',
         price: product?.price || '',
         description: product?.description || '',
-        images: []
+        images: [],
+        deleted_images: []
     });
+
+    console.log(images);
+
+    const [currentImages, setCurrentImages] = useState(images || []);
 
     const submit = (e) => {
         e.preventDefault();
@@ -26,15 +32,21 @@ export default function AddEdit({ product, categories, auth }) {
         formData.append('price', data.price);
         formData.append('description', data.description);
 
-        data.images.forEach((file, index) => {
+        currentImages.forEach((file, index) => {
             formData.append(`images[${index}]`, file);
         });
 
         let productRoute = product ? route('products.store', [product.id]) : route('products.store');
         post(productRoute);
-
-        console.log(data);
     };
+
+    const deleteProductImage = (id) => {
+        let updatedImages = currentImages.filter(function( obj ){
+            return obj.id !== id;
+        });
+        setCurrentImages(updatedImages);
+        setData('deleted_images', [...data.deleted_images, id]);
+    }
 
     return (
         <AuthenticatedLayout
@@ -45,6 +57,22 @@ export default function AddEdit({ product, categories, auth }) {
             <div>
                 <div className="py-4 px-4">
                     <div className="mt-6">
+                        <div className="flex justify-center flex-wrap">
+                            {
+                                currentImages.map((image) => (
+                                    <div key={image.id} className="flex flex-col items-center border-b border-yellow-700">
+                                        <img src={$image.url} alt="" className="w-full h-64 object-contain px-2 py-2"/>
+                                        <button
+                                            onClick={() => deleteProductImage(image.id)}
+                                            className="font-medium text-yellow-600 rounded-md bg-red-950 px-2 py-2 text-center hover:bg-red-900 mx-1 mb-2"
+                                        >
+                                            Delete
+                                        </button>
+                                    </div>
+                                ))
+                            }
+
+                        </div>
                         <form onSubmit={submit} className="mt-6 space-y-6">
                             <div>
                                 <InputLabel htmlFor="product_image_path" value="Image"/>

@@ -17,7 +17,10 @@ class ProductController extends Controller
 
         return Inertia::render('Products/List', [
             'products' => ProductResource::collection($products),
-            'success' => session('success')
+            'flash' => [
+                'success' => session('success'),
+                'error' => session('error')
+            ]
         ]);
     }
 
@@ -43,7 +46,8 @@ class ProductController extends Controller
     public function update(Product $product) {
         return Inertia::render('Products/AddEdit', [
             'product' => $product,
-            'categories' => CategoryResource::collection(Category::orderBy('name')->get())
+            'categories' => CategoryResource::collection(Category::orderBy('name')->get()),
+            'images' => $product->images()->get()
         ]);
     }
 

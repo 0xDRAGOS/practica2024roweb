@@ -2,11 +2,12 @@ import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout';
 import {Head, Link} from '@inertiajs/react';
 import CategoriesTable from "@/Pages/Categories/CategoriesTable.jsx";
 
-export default function List({ categories, success, auth }) {
+export default function List({ categories, success, flash, auth }) {
     return (
         <AuthenticatedLayout
             user={auth.user}
             header={<h2 className="font-semibold text-xl text-yellow-600 leading-tight">Categories</h2>}
+            flash={flash}
         >
             <Head title="Categories List" />
             <div>

@@ -2,11 +2,12 @@ import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout';
 import {Head, Link} from '@inertiajs/react';
 import ProductsTable from './ProductsTable.jsx'
 
-export default function List({ products, success, auth }) {
+export default function List({ products, flash, auth }) {
     return (
         <AuthenticatedLayout
             user={auth.user}
             header={<h2 className="font-semibold text-xl text-yellow-600 leading-tight">Products</h2>}
+            flash={flash}
         >
             <Head title="Products List" />
             <div>
@@ -17,7 +18,6 @@ export default function List({ products, success, auth }) {
                         <div className="mt-6">
                                 <ProductsTable
                                     products={products}
-                                    success={success}
                                 />
                         </div>
                 </div>
