@@ -65,7 +65,7 @@ export default function Home({ products, search, auth, canLogin, canRegister }) 
                                         className="text-yellow-600 font-bold text-lg mr-2"/>
                             <SelectInput
                                 id="category"
-                                className="p-2 bg-red-900 text-red-950 rounded font-bold hover:bg-yellow-500"
+                                className="min-w-full p-2 bg-red-900 text-red-950 rounded font-bold hover:bg-yellow-500"
                                 value={selectedCategory}
                                 required
                                 onChange={(e) => setSelectedCategory(e.target.value)}
