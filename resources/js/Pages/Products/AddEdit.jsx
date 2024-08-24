@@ -18,8 +18,6 @@ export default function AddEdit({ product, categories, images, auth }) {
         deleted_images: []
     });
 
-    console.log(images);
-
     const [currentImages, setCurrentImages] = useState(images || []);
 
     const submit = (e) => {

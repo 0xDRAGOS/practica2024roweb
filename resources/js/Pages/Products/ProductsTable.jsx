@@ -1,7 +1,7 @@
 import Pagination from "@/Components/Pagination";
 import {Link, router, useForm} from "@inertiajs/react";
 
-export default function ProductsTable({ products }) {
+export default function ProductsTable({ products, filteredProducts }) {
     const {delete: deleteEntry} = useForm({});
     const deleteProduct = (id) => {
         deleteEntry(route('products.delete', [id]), {
@@ -27,7 +27,7 @@ export default function ProductsTable({ products }) {
                     </thead>
 
                     <tbody>
-                    {products.data.map(product => (
+                    {filteredProducts.map(product => (
                         <tr className="bg-yellow-950 text-yellow-600 border-b border-yellow-700" key={product.id}>
                             <td className="px-3 py-2">{product.id}</td>
                             <th className="px-3 py-2 hover:underline">
