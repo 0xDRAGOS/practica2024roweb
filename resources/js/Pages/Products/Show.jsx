@@ -83,15 +83,29 @@ export default function Show({ auth, product, images, reviews }) {
                     </div>
                     <div className="mt-8">
                         <h3 className="font-bold text-xl text-yellow-600">User Reviews</h3>
-                        {reviews.data.map((review) => (
-                            <div key={review.id} className="bg-red-950 text-yellow-600 p-4 mt-4 rounded-lg shadow-lg">
-                                <div className="flex justify-between items-center mb-2">
-                                    <div className="font-bold">{review.user_name}</div>
-                                    <div className="text-sm text-gray-300">{new Date(review.created_at).toLocaleDateString()}</div>
+                        {reviews.data.map((review) => {
+                            let ratingColor;
+                            if (review.rating <= 2) {
+                                ratingColor = "text-red-600";
+                            } else if (review.rating === 3) {
+                                ratingColor = "text-yellow-600";
+                            } else {
+                                ratingColor = "text-green-600";
+                            }
+
+                            return (
+                                <div key={review.id} className="bg-red-950 text-yellow-600 p-4 mt-4 rounded-lg shadow-lg">
+                                    <div className="flex justify-between items-center mb-2">
+                                        <div className="font-bold">{review.user_name}</div>
+                                        <div className="text-sm text-gray-300">{new Date(review.created_at).toLocaleDateString()}</div>
+                                    </div>
+                                    <div className="flex justify-between items-center mb-2">
+                                        <div className="text-yellow-600">{review.comment}</div>
+                                        <div className={`${ratingColor}`}>Rating: {review.rating}</div>
+                                    </div>
                                 </div>
-                                <div className="text-yellow-600">{review.comment}</div>
-                            </div>
-                        ))}
+                            );
+                        })}
                     </div>
                     <Pagination links={reviews.meta.links}/>
                 </div>
