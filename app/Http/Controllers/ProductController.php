@@ -5,8 +5,10 @@ namespace App\Http\Controllers;
 use App\Http\Requests\ProductRequest;
 use App\Http\Resources\CategoryResource;
 use App\Http\Resources\ProductResource;
+use App\Http\Resources\ReviewResource;
 use App\Models\Category;
 use App\Models\Product;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 use Inertia\Inertia;
 
@@ -25,9 +27,12 @@ class ProductController extends Controller
     }
 
     public function show(Product $product) {
+        $reviews = $product->reviews()->with('user')->orderBy('created_at', 'desc')->paginate(10)->onEachSide(1);
+
         return Inertia::render('Products/Show', [
             'product' => new ProductResource($product),
-            'images' => $product->images()->get()
+            'images' => $product->images()->get(),
+            'reviews' => ReviewResource::collection($reviews),
         ]);
     }
 
@@ -60,5 +65,19 @@ class ProductController extends Controller
         $product->delete();
 
         return redirect()->route('products.list')->with('success', 'Product deleted successfully!');
+    }
+
+    public function toggleLike(Product $product)
+    {
+        $user = Auth::user();
+        $like = $product->likes()->where('user_id', $user->id)->first();
+
+        if ($like) {
+            $like->delete();
+        } else {
+            $product->likes()->create(['user_id' => $user->id]);
+        }
+
+        return Inertia::location(route('products.show', $product->id));
     }
 }
