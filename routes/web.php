@@ -43,6 +43,7 @@ Route::group(['middleware' => ['auth', 'verified']], function () {
         Route::get('/edit/{product}', [ProductController::class, 'update'])->name('products.update');
         Route::post('/store/{product?}', [ProductController::class, 'store'])->name('products.store');
         Route::post('/{product}/like', [ProductController::class, 'toggleLike'])->name('products.toggleLike');
+        Route::post('/{product}/review', [ProductController::class, 'storeReview'])->name('products.storeReview');
         Route::delete('/delete/{product}', [ProductController::class, 'delete'])->name('products.delete');
         Route::get('/{product}', [ProductController::class, 'show'])->name('products.show');
     });

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\ProductRequest;
+use App\Http\Requests\ReviewRequest;
 use App\Http\Resources\CategoryResource;
 use App\Http\Resources\ProductResource;
 use App\Http\Resources\ReviewResource;
@@ -79,5 +80,11 @@ class ProductController extends Controller
         }
 
         return Inertia::location(route('products.show', $product->id));
+    }
+
+    public function storeReview(Product $product, ReviewRequest $request) {
+        $request->updateOrCreate($product);
+
+        return redirect()->route('products.show', $product)->with('success', 'Review saved successfully!');
     }
 }
