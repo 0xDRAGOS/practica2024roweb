@@ -3,14 +3,21 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\CategoryRequest;
+use App\Http\Resources\CategoryResource;
 use App\Models\Category;
 use Inertia\Inertia;
 
 class CategoryController extends Controller
 {
     public function list() {
+        $categories = Category::query()->orderBy('name')->paginate(10)->onEachSide(1);
+
         return Inertia::render('Categories/List', [
-            'categories' => Category::orderBy('order')->get()
+            'categories' => CategoryResource::collection($categories),
+            'flash' => [
+                'success' => session('success'),
+                'error' => session('error')
+            ]
         ]);
     }
 
@@ -31,7 +38,11 @@ class CategoryController extends Controller
     }
 
     public function delete(Category $category) {
-        $category->delete($category);
+        if ($category->products()->count()) {
+            return redirect()->back()->with(['error' => 'Category contains products that are associated with it.']);
+        }
+
+        $category->delete();
 
         return redirect()->route('categories.list')->with('success', 'Category deleted successfully!');
     }

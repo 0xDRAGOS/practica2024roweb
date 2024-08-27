@@ -16,15 +16,15 @@ class PermissionsSeeder extends Seeder
         $permissions = [
             [
                 'id' => 1,
-                'title' => 'task_create',
+                'title' => 'product_create',
             ],
             [
                 'id' => 2,
-                'title' => 'task_edit',
+                'title' => 'product_edit',
             ],
             [
                 'id' => 3,
-                'title' => 'task_destroy',
+                'title' => 'product_destroy',
             ],
         ];
         Permission::insert($permissions);

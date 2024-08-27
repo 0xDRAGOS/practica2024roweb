@@ -1,13 +1,11 @@
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout';
 import { Head } from '@inertiajs/react';
 
-export default function Dashboard({ auth, laravelVersion, phpVersion }) {
+export default function Dashboard({ auth }) {
     return (
         <AuthenticatedLayout
             user={auth.user}
             header={<h2 className="font-semibold text-xl text-yellow-600 leading-tight">Dashboard</h2>}
-            laravelVersion={laravelVersion}
-            phpVersion={phpVersion}
         >
             <Head title="Dashboard" />
 

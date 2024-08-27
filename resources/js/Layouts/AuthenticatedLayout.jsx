@@ -5,9 +5,8 @@ import NavLink from '@/Components/NavLink';
 import ResponsiveNavLink from '@/Components/ResponsiveNavLink';
 import { Link } from '@inertiajs/react';
 
-export default function Authenticated({ user, header, children, laravelVersion, phpVersion }) {
+export default function Authenticated({ user, header, children, flash }) {
     const [showingNavigationDropdown, setShowingNavigationDropdown] = useState(false);
-
     return (
         <div className="min-h-screen flex flex-col bg-yellow-900">
             <nav className="bg-red-950 border-b border-yellow-600">
@@ -27,8 +26,14 @@ export default function Authenticated({ user, header, children, laravelVersion, 
                             </div>
 
                             <div className="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
-                                <NavLink href={route('categories.list')} active={route().current('dashboard')}>
+                                <NavLink href={route('categories.list')} active={route().current('categories.list')}>
                                     Categories
+                                </NavLink>
+                            </div>
+
+                            <div className="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
+                                <NavLink href={route('products.list')} active={route().current('products.list')}>
+                                    Products
                                 </NavLink>
                             </div>
                         </div>
@@ -42,7 +47,7 @@ export default function Authenticated({ user, header, children, laravelVersion, 
                                                 type="button"
                                                 className="inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md text-red-950 bg-yellow-600 hover:bg-yellow-400 focus:outline-none transition ease-in-out duration-150"
                                             >
-                                                {/*{user.name}*/}
+                                                {user.name}
 
                                                 <svg
                                                     className="ms-2 -me-0.5 h-4 w-4"
@@ -105,8 +110,8 @@ export default function Authenticated({ user, header, children, laravelVersion, 
 
                     <div className="pt-4 pb-1 border-t border-gray-200">
                         <div className="px-4">
-                            {/*<div className="font-medium text-base text-yellow-600">{user.name}</div>*/}
-                            {/*/!*<div className="font-medium text-sm text-yellow-600">{user.email}</div>*!/*/}
+                            <div className="font-medium text-base text-yellow-600">{user.name}</div>
+                            {<div className="font-medium text-sm text-yellow-600">{user.email}</div>}
                         </div>
 
                         <div className="mt-3 space-y-1">
@@ -125,10 +130,22 @@ export default function Authenticated({ user, header, children, laravelVersion, 
                 </header>
             )}
 
+            {flash && flash.success && (
+                <div className="bg-emerald-500 py-2 px-4 text-white rounded mt-4 mx-12">
+                    {flash.success}
+                </div>
+            )}
+
+            {flash && flash.error && (
+                <div className="bg-red-500 py-2 px-4 text-white rounded mt-4 mx-12">
+                    {flash.error}
+                </div>
+            )}
+
             <main className="flex-1">{children}</main>
 
             <footer className="bg-red-950 py-16 text-center text-sm text-yellow-600">
-                Practica
+                <p>&copy; {new Date().getFullYear()} Practica Roweb. All rights reserved.</p>
             </footer>
         </div>
     );

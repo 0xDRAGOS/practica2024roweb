@@ -27,5 +27,6 @@ class CategoryRequest extends FormRequest
         $category->order = $this->get('order');
         $category->save();
 
+        return $category;
     }
 }
