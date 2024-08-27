@@ -18,8 +18,8 @@ class ReviewFactory extends Factory
     public function definition(): array
     {
         return [
-            //'product_id' => \App\Models\Product::inRandomOrder()->first()->id,
-            'product_id' => null,
+            'product_id' => \App\Models\Product::inRandomOrder()->first()->id,
+//            'product_id' => null,
             'user_id' => \App\Models\User::inRandomOrder()->first()->id,
             'rating' => $this->faker->numberBetween(1, 5),
             'comment' => $this->faker->sentence,

@@ -19,6 +19,8 @@ class ProductRequest extends FormRequest
             'images.*' => ['image'],
             'deleted_images' => ['nullable', 'array'],
             'deleted_images.*' => ['exists:product_images,id'],
+            'likes' => ['nullable', 'numeric'],
+            'comments' => ['nullable', 'array'],
         ];
     }
 

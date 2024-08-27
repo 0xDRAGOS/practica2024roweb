@@ -24,7 +24,9 @@ class ProductResource extends JsonResource
             'price' => $this->price,
             'description' => $this->description,
             'created_at' => (new Carbon($this->created_at))->format('Y-m-d'),
-            'updated_at' => (new Carbon($this->updated_at))->format('Y-m-d')
+            'updated_at' => (new Carbon($this->updated_at))->format('Y-m-d'),
+            'likes_count' => $this->likes()->count(),
+            'is_liked_by_user' => $this->likes()->where('user_id', auth()->id())->exists(),
         ];
     }
 }

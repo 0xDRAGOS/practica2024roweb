@@ -6,6 +6,7 @@ import SelectInput from "@/Components/SelectInput.jsx";
 import {useState} from "react";
 
 export default function List({ products, flash, auth }) {
+
     const [selectedCategory, setSelectedCategory] = useState('All');
 
     const filteredProducts = selectedCategory === 'All' ? products.data : products.data.filter(product => product.category.name === selectedCategory);
@@ -18,7 +19,7 @@ export default function List({ products, flash, auth }) {
             header={<h2 className="font-semibold text-xl text-yellow-600 leading-tight">Products</h2>}
             flash={flash}
         >
-            <Head title="Products List" />
+            <Head title="Products List"/>
             <div>
                 <div className="py-4 px-4">
                     <div className="flex justify-between my-4">
