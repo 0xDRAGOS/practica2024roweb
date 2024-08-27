@@ -131,13 +131,13 @@ export default function Authenticated({ user, header, children, flash }) {
             )}
 
             {flash && flash.success && (
-                <div className="bg-emerald-500 py-2 px-4 text-white rounded mb-4">
+                <div className="bg-emerald-500 py-2 px-4 text-white rounded mt-4 mx-12">
                     {flash.success}
                 </div>
             )}
 
             {flash && flash.error && (
-                <div className="bg-red-500 py-2 px-4 text-white rounded mb-4">
+                <div className="bg-red-500 py-2 px-4 text-white rounded mt-4 mx-12">
                     {flash.error}
                 </div>
             )}

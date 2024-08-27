@@ -9,6 +9,7 @@ use App\Http\Resources\ProductResource;
 use App\Http\Resources\ReviewResource;
 use App\Models\Category;
 use App\Models\Product;
+use App\Models\Review;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 use Inertia\Inertia;
@@ -34,6 +35,10 @@ class ProductController extends Controller
             'product' => new ProductResource($product),
             'images' => $product->images()->get(),
             'reviews' => ReviewResource::collection($reviews),
+            'flash' => [
+                'success' => session('success'),
+                'error' => session('error')
+            ]
         ]);
     }
 
@@ -86,5 +91,16 @@ class ProductController extends Controller
         $request->updateOrCreate($product);
 
         return redirect()->route('products.show', $product)->with('success', 'Review saved successfully!');
+    }
+
+    public function deleteReview(Product $product, Review $review)
+    {
+        if (auth()->id() !== $review->user_id) {
+            return redirect()->route('products.show', $product)->with('error', 'Unauthorized access!');
+        }
+
+        $review->delete();
+
+        return redirect()->route('products.show', $product)->with('success', 'Review deleted successfully!');
     }
 }

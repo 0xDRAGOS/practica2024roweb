@@ -8,15 +8,16 @@ import TextAreaInput from "@/Components/TextAreaInput.jsx";
 import PrimaryButton from "@/Components/PrimaryButton.jsx";
 import InputError from "@/Components/InputError.jsx";
 
-export default function Show({ auth, product, images, reviews }) {
+export default function Show({ auth, product, images, reviews, flash }) {
     const [likesCount, setLikesCount] = useState(product.likes_count);
     const [isLiked, setIsLiked] = useState(product.is_liked_by_user);
 
-    // Initialize useForm only once
     const { data, setData, post, processing, errors, reset } = useForm({
         comment: '',
         rating: 1,
     });
+
+    const { delete: destroy } = useForm();
 
     const handleLikeToggle = () => {
         post(`/products/${product.id}/like`, {}, {
@@ -44,9 +45,21 @@ export default function Show({ auth, product, images, reviews }) {
         });
     };
 
+    const deleteReview = (reviewId) => {
+        destroy(`/products/delete/${product.id}/review/${reviewId}`, {
+            onSuccess: () => {
+                console.log("Review deleted successfully");
+            },
+            onError: (errors) => {
+                console.error("Error deleting review:", errors);
+            }
+        });
+    };
+
     return (
         <AuthenticatedLayout user={auth.user}
                              header={<h2 className="font-semibold text-xl text-yellow-600 leading-tight">{`Product "${product.name}"`}</h2>}
+                             flash={flash}
         >
             <Head title={`Product "${product.name}"`} />
             <div className="py-12">
@@ -158,9 +171,9 @@ export default function Show({ auth, product, images, reviews }) {
 
                             return (
                                 <div key={review.id}
-                                     className="bg-red-950 text-yellow-600 p-4 mt-4 rounded-lg shadow-lg">
+                                     className="bg-red-950 text-yellow-500 p-4 mt-4 rounded-lg shadow-lg">
                                     <div className="flex justify-between items-center mb-2">
-                                        <div className="font-bold">{review.user_name}</div>
+                                        <div className="font-bold text-2xl">{review.user_name}</div>
                                         <div
                                             className="text-sm text-gray-300">{new Date(review.created_at).toLocaleDateString()}</div>
                                     </div>
@@ -168,6 +181,16 @@ export default function Show({ auth, product, images, reviews }) {
                                         <div className="text-yellow-600">{review.comment}</div>
                                         <div className={`${ratingColor}`}>Rating: {review.rating}</div>
                                     </div>
+                                    {auth.user && auth.user.id === review.user_id && (
+                                        <div className="flex justify-end">
+                                            <button
+                                                className="font-medium text-red-950 rounded-md bg-yellow-600 px-2 py-2 text-center hover:bg-yellow-400 mx-1"
+                                                onClick={() => deleteReview(review.id)}
+                                            >
+                                                Delete
+                                            </button>
+                                        </div>
+                                    )}
                                 </div>
                             );
                         })}
