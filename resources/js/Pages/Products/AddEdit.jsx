@@ -17,7 +17,6 @@ export default function AddEdit({ product, categories, images, auth }) {
         images: [],
         deleted_images: []
     });
-
     const [currentImages, setCurrentImages] = useState(images || []);
 
     const submit = (e) => {
@@ -59,7 +58,7 @@ export default function AddEdit({ product, categories, images, auth }) {
                             {
                                 currentImages.map((image) => (
                                     <div key={image.id} className="flex flex-col items-center border-b border-yellow-700">
-                                        <img src={$image.url} alt="" className="w-full h-64 object-contain px-2 py-2"/>
+                                        <img src={image.url} alt="" className="w-full h-64 object-contain px-2 py-2"/>
                                         <button
                                             onClick={() => deleteProductImage(image.id)}
                                             className="font-medium text-yellow-600 rounded-md bg-red-950 px-2 py-2 text-center hover:bg-red-900 mx-1 mb-2"
