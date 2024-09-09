@@ -13,6 +13,7 @@ export default function List({ products, flash, auth }) {
 
     const categories = Array.from(new Set(products.data.map(product => product.category.name)));
 
+    console.log(auth.can);
     return (
         <AuthenticatedLayout
             user={auth.user}
@@ -42,14 +43,21 @@ export default function List({ products, flash, auth }) {
                                 }
                             </SelectInput>
                         </div>
-                        <Link href={route('products.create')}
-                              className="mt-2 text-yellow-600 rounded-md bg-red-950 px-4 py-4 text-center hover:bg-red-900">Add
-                            a new product</Link>
+
+                        {
+                            auth.can.product_create && (
+                            <Link href={route('products.create')}
+                        className="mt-2 text-yellow-600 rounded-md bg-red-950 px-4 py-4 text-center hover:bg-red-900">Add
+                        a new product</Link>
+                            )
+                        }
+
                     </div>
                     <div className="mt-6">
                         <ProductsTable
                             products={products}
                             filteredProducts={filteredProducts}
+                            auth={auth}
                         />
                     </div>
                 </div>

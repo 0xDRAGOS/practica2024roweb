@@ -13,12 +13,17 @@ export default function List({ categories, success, flash, auth }) {
             <div>
                 <div className="py-4 px-4">
                     <div className="flex justify-end my-4">
+                        {
+                            auth.can.category_create && (
                         <Link href={route('categories.create')} className="mt-2 text-yellow-600 rounded-md bg-red-950 px-4 py-4 text-center hover:bg-red-900">Add a new category</Link>
-                    </div>
+                            )
+                        }
+                        </div>
                     <div className="mt-6">
                         <CategoriesTable
                             categories={categories}
                             success={success}
+                            auth={auth}
                         />
                     </div>
                 </div>

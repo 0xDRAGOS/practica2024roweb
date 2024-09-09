@@ -1,7 +1,7 @@
 import Pagination from "@/Components/Pagination";
 import {Link, router, useForm} from "@inertiajs/react";
 
-export default function CategoriesTable({ categories }) {
+export default function CategoriesTable({ categories, auth }) {
     const {delete: deleteEntry} = useForm({});
     const deleteCategory = (id) => {
         deleteEntry(route('categories.delete', [id]), {
@@ -32,11 +32,24 @@ export default function CategoriesTable({ categories }) {
                             <td className="px-3 py-2">{category.name}</td>
                             <td className="px-3 py-2">{category.order}</td>
                             <td className="px-3 py-2 flex justify-center">
-                                <Link href={route('categories.update', category.id)}
-                                      className="font-medium text-yellow-600 rounded-md bg-red-950 px-2 py-2 text-center hover:bg-red-900 mx-1">Update</Link>
-                                <button onClick={() => deleteCategory(category.id)}
-                                        className="font-medium text-yellow-600 rounded-md bg-red-950 px-2 py-2 text-center hover:bg-red-900 mx-1">Delete
-                                </button>
+                                {
+                                    auth.can.category_edit && (
+                                        <Link href={route('categories.update', category.id)}
+                                              className="font-medium text-yellow-600 rounded-md bg-red-950 px-2 py-2 text-center hover:bg-red-900 mx-1">Update</Link>
+                                    )
+                                }
+                                {
+                                    auth.can.category_destroy && (
+                                        <button onClick={() => deleteCategory(category.id)}
+                                                className="font-medium text-yellow-600 rounded-md bg-red-950 px-2 py-2 text-center hover:bg-red-900 mx-1">Delete
+                                        </button>
+                                    )
+                                }
+                                {
+                                    !auth.can.category_edit && !auth.can.category_destroy && (
+                                        <span className="text-yellow-600">No actions available</span>
+                                    )
+                                }
                             </td>
                         </tr>
                     ))}

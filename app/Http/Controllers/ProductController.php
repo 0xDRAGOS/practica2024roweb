@@ -43,12 +43,20 @@ class ProductController extends Controller
     }
 
     public function create() {
+        if (!Auth::user()->hasPermission('product_create')) {
+            return redirect()->route('products.list')->with('error', 'You do not have permission to perform this action.');
+        }
+
         return Inertia::render('Products/AddEdit', [
             'categories' => CategoryResource::collection(Category::orderBy('name')->get()),
         ]);
     }
 
     public function store(ProductRequest $productRequest, ?Product $product = null) {
+        if (!Auth::user()->hasPermission('product_create')) {
+            return redirect()->route('products.list')->with('error', 'You do not have permission to perform this action.');
+        }
+
         $productRequest->updateOrCreate($product);
 
         return redirect()->route('products.list')->with('success', 'Product saved successfully!');
@@ -63,6 +71,18 @@ class ProductController extends Controller
     }
 
     public function delete(Product $product) {
+        if (!Auth::user()->hasPermission('product_destroy')) {
+            return redirect()->route('products.list')->with('error', 'You do not have permission to perform this action.');
+        }
+
+        if ($product->likes()->count()) {
+            return redirect()->back()->with(['error' => 'Product has likes that are associated with it.']);
+        }
+
+        if ($product->reviews()->count()) {
+            return redirect()->back()->with(['error' => 'Product has reviews that are associated with it.']);
+        }
+
         foreach ($product->images as $image) {
             Storage::disk('public')->delete($image->path);
         }
